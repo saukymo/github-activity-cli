@@ -1,0 +1,2 @@
+PyGithub==1.28
+xtermcolor==1.3
