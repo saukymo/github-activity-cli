@@ -10,8 +10,9 @@ cf.read('config.ini')
 
 
 def get_repo_contributions(repo):
-    contribution = repo.get_stats_commit_activity()
-    return contribution or [[0 for _ in range(7)] for week in range(52)]
+    contribute = repo.get_stats_commit_activity()
+    return contribute or [[0 for _ in range(7)] for _ in range(52)]
+
 
 def get_color(commit):
     if commit == 0:
@@ -26,15 +27,15 @@ password = cf.get('account', 'password')
 
 client = Github(username, password)
 user = client.get_user()
-repos = user.get_repos()
+repo_list = user.get_repos()
 
 pool = ThreadPool(processes=16)
-results = pool.map(get_repo_contributions, repos)
+results = pool.map(get_repo_contributions, repo_list)
 
 pool.close()
 pool.join()
 
-# for repo in repos:
+# for repo in repo_list:
 #     contribution = repo.get_stats_commit_activity()
 #     if contribution is None:
 #         print(repo.name)
